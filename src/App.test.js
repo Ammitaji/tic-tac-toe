@@ -1,4 +1,3 @@
-// src/App.test.js
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
@@ -26,7 +25,7 @@ describe('Tic Tac Toe', () => {
     test('player X wins', () => {
         render(<App />);
         const cells = screen.getAllByRole('button');
-        
+
         fireEvent.click(cells[0]); // X
         fireEvent.click(cells[3]); // O
         fireEvent.click(cells[1]); // X
@@ -46,23 +45,18 @@ describe('Tic Tac Toe', () => {
         fireEvent.click(cells[1]); // O
 
         // Click the restart button
-        const restartButton = screen.getByText(/Restart/i);
+        const restartButton = screen.getByRole('button', { name: /restart/i });
         fireEvent.click(restartButton);
 
         // Check that the status text is back to X's turn
-        const statusText = screen.getByText(/X's turn/i);
-        expect(statusText).toBeInTheDocument();
+        expect(screen.getByText(/X's turn/i)).toBeInTheDocument();
 
         // Ensure all cells are empty
         const updatedCells = screen.getAllByRole('button');
-        updatedCells.forEach(cell => {
-            expect(cell).toHaveTextContent(''); // Ensure all cells are empty
+        updatedCells.forEach((cell, index) => {
+            console.log(`Cell ${index}:`, cell.textContent); // Log the cell content
+            expect(cell).toBeEmptyDOMElement(); // Check that the cell is empty
         });
-
-        // Ensure the current player is reset to X
-        expect(updatedCells[0]).toHaveTextContent(''); // Cell 0 should be empty
-        expect(updatedCells[1]).toHaveTextContent(''); // Cell 1 should be empty
-        expect(updatedCells[2]).toHaveTextContent(''); // Cell 2 should be empty
     });
 });
 

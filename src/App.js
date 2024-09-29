@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
@@ -20,12 +19,10 @@ const App = () => {
     const [running, setRunning] = useState(true);
 
     const initializeGame = () => {
-        console.log("Initializing game...");
         setOptions(Array(9).fill(""));
         setCurrentPlayer("X");
         setStatusText("X's turn");
         setRunning(true);
-        console.log("Game initialized:", { options, currentPlayer, statusText, running });
     };
 
     const cellClicked = (index) => {
@@ -34,7 +31,6 @@ const App = () => {
         const newOptions = [...options];
         newOptions[index] = currentPlayer;
         setOptions(newOptions);
-        console.log("Cell clicked:", index, "Current player:", currentPlayer);
         checkWinner(newOptions);
     };
 
@@ -51,11 +47,9 @@ const App = () => {
 
         if (roundWon) {
             setStatusText(`${currentPlayer} wins!`);
-            console.log(`${currentPlayer} wins!`);
             setRunning(false);
         } else if (!newOptions.includes("")) {
             setStatusText("Draw!");
-            console.log("It's a draw!");
             setRunning(false);
         } else {
             changePlayer();
@@ -66,7 +60,6 @@ const App = () => {
         setCurrentPlayer((prevPlayer) => {
             const newPlayer = prevPlayer === "X" ? "O" : "X";
             setStatusText(`${newPlayer}'s turn`);
-            console.log("Player changed to:", newPlayer);
             return newPlayer;
         });
     };
